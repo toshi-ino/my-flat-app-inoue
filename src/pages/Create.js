@@ -1,11 +1,13 @@
 import { toBeInTheDocument } from "@testing-library/jest-dom/dist/matchers";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilState } from 'recoil';
+import { lists } from '../recoil/atoms';
 
 const Create = () => {
-  const [lists, setLists] = useState([]);
   const [address, setAddress] = useState("aiueo");
   const [type, setType] = useState("flat");
+  const [recoilLists, setRecoilLists] = useRecoilState(lists);
 
   const handleAddAddress = (e) => {
     setAddress(e.target.value);
@@ -22,16 +24,12 @@ const Create = () => {
         type: type,
         id: Math.floor(Math.random() * 100),
       },
-      ...lists,
+      ...recoilLists,
     ];
 
-    console.log("newLists=", newLists);
-    setLists(newLists);
-
-    //画面遷移処理
+    setRecoilLists(newLists);
   };
 
-  console.log(lists);
   return (
     <>
       <h2>Address</h2>
@@ -44,7 +42,7 @@ const Create = () => {
         <option value="Terraced">Terraced</option>
       </select>
 
-      <Link to="/" state={{ lists: lists }}>
+      <Link to="/">
         <button
           onClick={() => {
             handleClickCreate();

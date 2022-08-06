@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useRecoilState } from 'recoil';
+import { lists } from '../recoil/atoms'
 
 const Top = () => {
-  const location = useLocation();
   const [flatLists, setFlatLists] = useState([]);
-  console.log("location=", location.state);
+  const [recoilLists, setRecoilLists] = useRecoilState(lists);
+  
+  console.log("recoilLists=", recoilLists);
 
   return (
     <>
